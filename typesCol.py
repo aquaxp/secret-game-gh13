@@ -7,7 +7,7 @@ import dateutil.parser
 try:
     from pony.orm import * #ORM
 except ImportError:
-    print 'This tool using pony.orm, please install it from http://ponyorm.com'
+    print 'This tool is using pony.orm, please install it from http://ponyorm.com'
     sys.exit(1)
 
 if os.path.exists('data.sqlite'):
@@ -16,7 +16,6 @@ else:
     db = Database("sqlite", "data.sqlite", create_db=True)
 
 # ORM Entities
-
 class User(db.Entity):
     uuid = PrimaryKey(unicode)
     curentLocation = Optional('Location')
@@ -52,6 +51,5 @@ class Score(db.Entity):
     winner = Optional(unicode) #uuid
     points = Optional(float) #points
 
-
-sql_debug(True)
+sql_debug(False)
 db.generate_mapping(create_tables=True)
