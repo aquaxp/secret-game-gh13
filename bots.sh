@@ -1,17 +1,13 @@
 #! /bin/sh
-# bots
+
+server="server.org"
 
 # deploy command
 # server="server.org" ;git add .; git commit -m "update";git push heroku master;heroku ps:scale web=1; curl -X POST ${server}/c2c -H "Content-Type: application/json" -d '{"action":"creategame","name":"hakaton","start":"2013-11-30 09:24:43.827522","end":"2013-12-01 09:24:43.827522"}'; echo;curl -X POST ${server}/c2c -H "Content-Type: application/json" -d '{"action":"creategame","name":"demo","start":"2013-11-30 09:24:43.827522","end":"2013-12-01 09:24:43.827522"}'; echo; curl -X POST  ${server}/games/ala -H "Content-Type: application/json" -d '{"uuid":"ala","latitude":5.45646,"longitude":4.0,"accuracy":2.0,"action":"subscribe","gamename":"demo"}'; echo; curl -X POST  ${server}/auth -H "Content-Type: application/json" -d '{"uuid":"ala1","latitude":5.45646,"longitude":4.0,"accuracy":2.0}'; echo
 # git add .; git commit -m "update";git push heroku master;heroku ps:scale web=1; curl -X POST ${server}/c2c -H "Content-Type: application/json" -d '{"action":"creategame","name":"hakaton","start":"2013-11-30 09:24:43.827522","end":"2013-12-01 09:24:43.827522"}'; echo;curl -X POST ${server}/c2c -H "Content-Type: application/json" -d '{"action":"creategame","name":"demo","start":"2013-11-30 09:24:43.827522","end":"2013-12-01 09:24:43.827522"}';
 #
 
-server="server.org"
-
-range=(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38)
-
 lon_bot1=( 83.088750 83.089686 83.090735 83.091600 83.092238 83.092711 83.092979 83.093534 83.094399 83.094996 83.096107 83.097507 83.098577 83.100038 83.100944 83.102822 83.104150 83.105542 83.105510 83.105315 83.105089 83.104506 83.104635 83.104441 83.104409 83.104020 83.103955 83.103728 83.103340 83.103340 83.102627 83.101267 83.099972 83.099907 83.099875 83.100522 83.101559 83.102206 83.102368 83.102563 )
-
 lat_bot1=( 54.835539 54.836006 54.836468 54.836089 54.835674 54.835247 54.835046 54.835472 54.835804 54.836326 54.836693 54.837238 54.836717 54.836776 54.836266 54.836934 54.837661 54.838351 54.837288 54.836523 54.835553 54.834826 54.833800 54.832457 54.831711 54.830872 54.830293 54.829472 54.828689 54.827849 54.827420 54.827831 54.827812 54.829249 54.830349 54.830983 54.831058 54.832233 54.833278 54.834639 )
 
 lon_bot2=( 83.076390 83.082227 83.081495 83.081166 83.081002 83.080304 83.080756 83.082644 83.084573 83.085887 83.086339 83.086257 83.086626 83.086544 83.086298 83.085271 83.084040 83.082603 83.080920 83.080058 83.080427 83.080509 83.081330 83.082685 83.083875 83.085025 83.086339 83.087078 83.089048 83.090485 83.090895 83.090772 83.090608 83.089869 83.088596 83.087160 83.085641 83.084450 83.083424 83.082316 )
@@ -55,9 +51,7 @@ curl -X POST  ${server}/games/bot1 -H "Content-Type: application/json" -d  "{\"u
 curl -X POST  ${server}/auth -H "Content-Type: application/json" -d "{\"uuid\":\"bot7\",\"latitude\":${lat_bot7[$i]},\"longitude\":${lon_bot7[$i]},\"accuracy\":2.0}"
 curl -X POST  ${server}/games/bot1 -H "Content-Type: application/json" -d  "{\"uuid\":\"bot7\",\"latitude\":${lat_bot7[$i]},\"longitude\":${lon_bot7[$i]},\"accuracy\":2.0, \"action\":\"subscribe\",\"gamename\":\"demo\"}"
 
-#sleep 1
-
-for i in "${range[@]}"
+for i in `seq 0 38`
 do
    curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot1\",\"latitude\":${lat_bot1[$i]},\"longitude\":${lon_bot1[$i]},\"accuracy\":4.0}";
    curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot2\",\"latitude\":${lat_bot2[$i]},\"longitude\":${lon_bot2[$i]},\"accuracy\":4.0}";
@@ -66,58 +60,4 @@ do
    curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot5\",\"latitude\":${lat_bot5[$i]},\"longitude\":${lon_bot5[$i]},\"accuracy\":4.0}";
    curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot6\",\"latitude\":${lat_bot6[$i]},\"longitude\":${lon_bot6[$i]},\"accuracy\":4.0}";
    curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot7\",\"latitude\":${lat_bot7[$i]},\"longitude\":${lon_bot7[$i]},\"accuracy\":4.0}";
-   #sleep 1
 done
-
-for i in "${range[@]}"
-do
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot1\",\"latitude\":${lat_bot1[$i]},\"longitude\":${lon_bot1[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot2\",\"latitude\":${lat_bot2[$i]},\"longitude\":${lon_bot2[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot3\",\"latitude\":${lat_bot3[$i]},\"longitude\":${lon_bot3[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot4\",\"latitude\":${lat_bot4[$i]},\"longitude\":${lon_bot4[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot5\",\"latitude\":${lat_bot5[$i]},\"longitude\":${lon_bot5[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot6\",\"latitude\":${lat_bot6[$i]},\"longitude\":${lon_bot6[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot7\",\"latitude\":${lat_bot7[$i]},\"longitude\":${lon_bot7[$i]},\"accuracy\":4.0}";
-   #sleep 1
-done
-
-for i in "${range[@]}"
-do
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot1\",\"latitude\":${lat_bot1[$i]},\"longitude\":${lon_bot1[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot2\",\"latitude\":${lat_bot2[$i]},\"longitude\":${lon_bot2[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot3\",\"latitude\":${lat_bot3[$i]},\"longitude\":${lon_bot3[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot4\",\"latitude\":${lat_bot4[$i]},\"longitude\":${lon_bot4[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot5\",\"latitude\":${lat_bot5[$i]},\"longitude\":${lon_bot5[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot6\",\"latitude\":${lat_bot6[$i]},\"longitude\":${lon_bot6[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot7\",\"latitude\":${lat_bot7[$i]},\"longitude\":${lon_bot7[$i]},\"accuracy\":4.0}";
-   #sleep 1
-done
-
-for i in "${range[@]}"
-do
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot1\",\"latitude\":${lat_bot1[$i]},\"longitude\":${lon_bot1[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot2\",\"latitude\":${lat_bot2[$i]},\"longitude\":${lon_bot2[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot3\",\"latitude\":${lat_bot3[$i]},\"longitude\":${lon_bot3[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot4\",\"latitude\":${lat_bot4[$i]},\"longitude\":${lon_bot4[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot5\",\"latitude\":${lat_bot5[$i]},\"longitude\":${lon_bot5[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot6\",\"latitude\":${lat_bot6[$i]},\"longitude\":${lon_bot6[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot7\",\"latitude\":${lat_bot7[$i]},\"longitude\":${lon_bot7[$i]},\"accuracy\":4.0}";
-   #sleep 1
-done
-
-for i in "${range[@]}"
-do
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot1\",\"latitude\":${lat_bot1[$i]},\"longitude\":${lon_bot1[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot2\",\"latitude\":${lat_bot2[$i]},\"longitude\":${lon_bot2[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot3\",\"latitude\":${lat_bot3[$i]},\"longitude\":${lon_bot3[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot4\",\"latitude\":${lat_bot4[$i]},\"longitude\":${lon_bot4[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot5\",\"latitude\":${lat_bot5[$i]},\"longitude\":${lon_bot5[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot6\",\"latitude\":${lat_bot6[$i]},\"longitude\":${lon_bot6[$i]},\"accuracy\":4.0}";
-   curl -X POST  ${server}/state -H "Content-Type: application/json" -d "{\"uuid\":\"bot7\",\"latitude\":${lat_bot7[$i]},\"longitude\":${lon_bot7[$i]},\"accuracy\":4.0}";
-   #sleep 1
-done
-
-
-
-
-
