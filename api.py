@@ -1,17 +1,16 @@
-#api_classes
+"""API description"""
 from typesCol import *
 from flask.ext.restful import reqparse, abort, Api, Resource
 import math
 
 class Hello(Resource):
+    """Welcome message from server"""
     def get(self):
         return "Welcome to the battlefield", 201
 
 def distance(lat1, lon1, acc1, lat2, lon2, acc2):
     """Method to calculate Distance between two sets of Lat/Lon."""
     earth = 6371 #Earth's Radius in Kms.
-    #if acc1 > 500 or acc2 > 500:
-    #    return 500
     #Calculate Distance based in Haversine Formula
     dlat = math.radians(lat2-lat1)
     dlon = math.radians(lon2-lon1)
@@ -22,6 +21,7 @@ def distance(lat1, lon1, acc1, lat2, lon2, acc2):
 
 @db_session
 def collisionDetection(uuid):
+    """"Detecting player's circle collisions"""
     user = User.get(uuid=uuid)
     game = user.activeGame
     fla = 0
@@ -59,6 +59,7 @@ def user_stuff(args):
     user.current_location = current
 
 class Auth(Resource):
+    """API entry for auth"""
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('uuid', type=str, location='json')
@@ -82,6 +83,7 @@ class Auth(Resource):
         return us, 201
 
 class Games(Resource):
+    """API entry to interact with avaliable games"""
     @db_session
     def get(self, user_id):
         print user_id
@@ -147,18 +149,8 @@ class Games(Resource):
                 user.activeGame = None
                 selgame.users -= user_stuff
 
-
-
-
-
-        #if args['unsubscribe'] == '1':
-
-       # if (args['subscribe'])
-
-
-    #def checkActiveGame
-
 class Control(Resource):
+    """API to control server"""
     @db_session
     def post(self):
         parser = reqparse.RequestParser()
@@ -182,11 +174,11 @@ class Control(Resource):
             else:
                 game.delete()
                 return "deleted!", 201
-
         else:
             return "somesing goes bad",202
 
 class State(Resource):
+    """API entry to receive players state"""
     @db_session
     def post(self):
         parser = reqparse.RequestParser()
@@ -197,9 +189,6 @@ class State(Resource):
         args = parser.parse_args()
 
         user_stuff(args)
-
-        #if collisionDetection(args['uuid']) == 1:
-        #    return 'collision detected', 201
 
         if User.get(uuid=args['uuid']).activeGame is None:
             return "nogame for state request"
@@ -213,12 +202,6 @@ class State(Resource):
                     collision = 0
                 else:
                     collision = 1
-                # len(select(col for col in Collision if col.uuid1 == u.uuid1))
-
-
-                # select(us for us in User if )
-                # select(c for c in Customer if sum(c.orders.total_price) > 1000)
-                # select(p for p in Person).order_by(Person.name)
                 
                 info = {
                     'uuid':u.uuid,
@@ -234,29 +217,3 @@ class State(Resource):
                 return resp, 201
 
             return resp, 201
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
